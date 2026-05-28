@@ -426,7 +426,7 @@ With deep merge enabled in your Hiera configuration, all these subnets will be c
 The module creates:
 
 1. **Individual subnet files** in `/etc/kea/subnets4.d/` (e.g., `management.json`, `dc1-servers.json`)
-2. **A master include file** at `/etc/kea/kea-dhcp4-subnets.json` that uses Kea's `<?include?>` 
+2. **A master include file** at `/etc/kea/kea-dhcp4-subnets.json` that uses Kea's `<?include?>`
    directive to pull in each individual subnet file
 3. **The main config** `kea-dhcp4.conf` includes the master subnets file
 
@@ -453,6 +453,7 @@ Each subnet in the hash supports the following keys:
 | `valid_lifetime` | Integer | No | Override global valid lifetime |
 | `renew_timer` | Integer | No | Override global T1 timer |
 | `rebind_timer` | Integer | No | Override global T2 timer |
+| `option_def` | Hash | No | Custom (non-standard) DHCP Options |
 | `extra_config` | Hash | No | Additional Kea configuration options |
 
 ### Modular DHCPv6 Subnet Configuration
@@ -468,7 +469,7 @@ kea::dhcp6::subnets:
     option_data:
       - name: 'dns-servers'
         data: '2001:db8:1::1'
-  
+
   guest-v6:
     subnet: '2001:db8:2::/64'
     pools:

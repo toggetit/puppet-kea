@@ -16,6 +16,7 @@ $valid_lifetime = pick($config['valid_lifetime'], 4000)
 $preferred_lifetime = pick($config['preferred_lifetime'], 3000)
 $renew_timer = pick($config['renew_timer'], 1000)
 $rebind_timer = pick($config['rebind_timer'], 2000)
+$option_def   = pick($config['option_def'], [])
 $subnets = pick($config['subnets'], [])
 $option_data = pick($config['option_data'], [])
 $hooks_libraries = pick($config['hooks_libraries'], [])
@@ -155,6 +156,9 @@ if $ha_enabled {
         "preferred-lifetime": <%= $preferred_lifetime %>,
         "renew-timer": <%= $renew_timer %>,
         "rebind-timer": <%= $rebind_timer %>,
+<%- if !$option_def.empty { -%>
+        "option-def": <%= stdlib::to_json($option_def) %>,
+<%- } -%>
 <%- if $calculate_tee_times != undef { -%>
         "calculate-tee-times": <%= $calculate_tee_times %>,
 <%- } -%>
