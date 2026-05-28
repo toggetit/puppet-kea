@@ -74,11 +74,11 @@ class kea::dhcp6 {
 
   # Configuration file
   file { $config_file:
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => epp('kea/kea-dhcp6.conf.epp', {
+    ensure       => file,
+    owner        => 'root',
+    group        => 'root',
+    mode         => '0644',
+    content      => epp('kea/kea-dhcp6.conf.epp', {
         'config'         => $config,
         'config_dir'     => $kea::config_dir,
         'run_dir'        => $kea::run_dir,
@@ -87,8 +87,9 @@ class kea::dhcp6 {
         'ha_this_server' => $ha_this_server,
         'hooks_lib_dir'  => $hooks_lib_dir,
     }),
-    require => Package['isc-kea-dhcp6'],
-    notify  => Service['isc-kea-dhcp6-server'],
+    validate_cmd => '/usr/sbin/kea-dhcp6 -t %',
+    require      => Package['isc-kea-dhcp6'],
+    notify       => Service['isc-kea-dhcp6-server'],
   }
 
   # Service management

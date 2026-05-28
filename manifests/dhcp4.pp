@@ -74,11 +74,11 @@ class kea::dhcp4 {
 
   # Configuration file
   file { $config_file:
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => epp('kea/kea-dhcp4.conf.epp', {
+    ensure       => file,
+    owner        => 'root',
+    group        => 'root',
+    mode         => '0644',
+    content      => epp('kea/kea-dhcp4.conf.epp', {
         'config'         => $config,
         'config_dir'     => $kea::config_dir,
         'run_dir'        => $kea::run_dir,
@@ -87,8 +87,9 @@ class kea::dhcp4 {
         'ha_this_server' => $ha_this_server,
         'hooks_lib_dir'  => $hooks_lib_dir,
     }),
-    require => Package['isc-kea-dhcp4'],
-    notify  => Service['isc-kea-dhcp4-server'],
+    validate_cmd => '/usr/sbin/kea-dhcp4 -t %',
+    require      => Package['isc-kea-dhcp4'],
+    notify       => Service['isc-kea-dhcp4-server'],
   }
 
   # Service management
